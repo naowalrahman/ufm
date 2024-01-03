@@ -2,7 +2,7 @@
 
 ## Group Members:
 
-names here.
+Naowal Rahman, Rahel Arka
        
 # Intentions:
 
