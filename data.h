@@ -13,5 +13,6 @@
 
 struct stat **get_file_listing(char *dir);
 bool create_file(char *name);
+void display_dir(char *dir);
 
 #endif // DATA
