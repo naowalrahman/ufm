@@ -17,4 +17,7 @@ Expanded description including how much time was spent on task.
 Worked on `PROPOSAL.md`
 
 ### 2024-01-04 - Brief descriptino
-Worked on data functions
+Worked on data functions (create and display file)
+
+### 2024-01-05 - Brief description
+
