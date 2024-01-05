@@ -27,6 +27,19 @@ struct stat **get_file_listing(char *dir) {
             ++itr;
         }
     }
-
+    closedir(d);
     return list;
+}
+
+void display_files(const char *dir) {
+    DIR *d = opendir(dir);
+
+    struct dirent *entry;
+    while ((entry = readdir(d)) != NULL) {
+        if (entry->d_type != DT_DIR) {
+            printf("%s\n", entry->d_name);
+        }
+    }
+
+    closedir(d);
 }
