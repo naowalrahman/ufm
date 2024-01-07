@@ -1,6 +1,6 @@
-#ifndef DATA
+#ifndef DATA_H
 
-#define DATA
+#define DATA_H
 
 #include <dirent.h>
 #include <fcntl.h>
@@ -15,4 +15,4 @@ struct stat **get_file_listing(char *dir);
 bool create_file(char *name);
 void display_dir(char *dir);
 
-#endif // DATA
+#endif
