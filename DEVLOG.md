@@ -12,7 +12,7 @@ Wrote `PROPOSAL.md`. Spent about 40 minutes.
 Wrote `get_file_listing()`. Spent about 30 minutes including debugging.
 
 ### 2024-01-05 - Brief description
-Fixed the `display_dir()` function and optimized to make the code shorter. The function was also skipping directories within the given directory, so I fixed that as well.
+Fixed the `display_dir()` function and optimized to make the code shorter. The function was also skipping directories within the given directory, so I fixed that as well. This took around 15 minutes.
 
 ## Player 2
 
