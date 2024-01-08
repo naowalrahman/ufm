@@ -1,34 +1,41 @@
 #include "data.h"
 
-bool create_file(char* name) {
+bool create_file(char *name) {
     int fd = open(name, O_CREAT | O_WRONLY, 0644);
     if (fd == -1) return false;
     close(fd);
     return true;
 }
 
-struct stat **get_file_listing(char *dir) {
+int get_file_listing(char *dir, struct finfo ***list) {
     DIR *d = opendir(dir);
     struct dirent *entry;
 
     int size = 0;
-    while((entry = readdir(d))) {
-        if(entry->d_type != DT_DIR) ++size;
+    while ((entry = readdir(d))) {
+        if (entry->d_type != DT_DIR) ++size;
     }
-    
+
     closedir(d);
     d = opendir(dir);
-    struct stat **list = malloc(size * sizeof(struct stat));
-    struct stat **itr = list;
-    
-    while((entry = readdir(d))) {
-        if(entry->d_type != DT_DIR) {
-            stat(entry->d_name, *itr);
+    *list = malloc(size * sizeof(struct finfo *));
+    struct finfo **itr = *list;
+
+    while ((entry = readdir(d))) {
+        if (entry->d_type != DT_DIR) {
+            struct finfo *f = malloc(sizeof(struct finfo));
+
+            f->entry = entry;
+            f->stat_buffer = malloc(sizeof(struct stat));
+            stat(entry->d_name, f->stat_buffer);
+
+            *itr = f;
             ++itr;
         }
     }
     closedir(d);
-    return list;
+
+    return size;
 }
 
 void display_dir(char *dir) {

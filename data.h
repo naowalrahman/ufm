@@ -11,7 +11,12 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-struct stat **get_file_listing(char *dir);
+struct finfo {
+    struct dirent *entry;
+    struct stat *stat_buffer;
+};
+
+int get_file_listing(char *dir, struct finfo ***list);
 bool create_file(char *name);
 void display_dir(char *dir);
 

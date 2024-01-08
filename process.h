@@ -2,9 +2,10 @@
 
 #define PROCESS_H
 
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
-void run_program(char *program);
 void open_file_program(char *file);
 
 #endif
