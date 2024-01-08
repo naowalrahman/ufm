@@ -1,6 +1,6 @@
 # Dev Log:
 
-## Player 1
+## Naowal
 
 ### 2024-01-02
 Expanded description including how much time was spent on task.
@@ -17,7 +17,7 @@ Fixed the `display_dir()` function and optimized to make the code shorter. The f
 ### 2024-01-06 to 2024-01-07
 Created `process.h` file with functions necessary to open child processes and decide which program to run for some selected file in the file manager. Fixed an include guard inconsistency. 
 
-## Player 2
+## Rahel
 
 ### 2024-01-02
 Expanded description including how much time was spent on task.
