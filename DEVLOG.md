@@ -28,5 +28,7 @@ Worked on `PROPOSAL.md` for 20 minutes
 ### 2024-01-04
 Worked on data functions (create and display file) for 35 minutes including debugging
 
-### 2024-01-05
+### 2024-01-05 to 2024-01-07
+Created file manipulation functions (rename, delete, move)
 
+### 2024-01-08
