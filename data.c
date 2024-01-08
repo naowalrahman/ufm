@@ -39,3 +39,24 @@ void display_dir(char *dir) {
 
     closedir(d);
 }
+bool rename_file(char* old_name, char* new_name) {
+    if (rename(old_name, new_name) == 0) {
+        return true;
+    } else {
+        perror("Error renaming file");
+        return false;
+    }
+}
+
+bool delete_file(char* name) {
+    if (remove(name) == 0) {
+        return true;
+    } else {
+        perror("Error deleting file");
+        return false;
+    }
+}
+
+bool move_file(char* old, char* new) {
+    return rename_file(old, new);
+}
