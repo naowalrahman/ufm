@@ -32,6 +32,7 @@ Worked on `PROPOSAL.md` for 20 minutes
 Worked on data functions (create and display file) for 35 minutes including debugging
 
 ### 2024-01-05 to 2024-01-07
-Created file manipulation functions (rename, delete, move)
+Created file manipulation functions (rename, delete, move) using stdio builtin functions
 
 ### 2024-01-08
+Modified data.h with functions required for file manipulation.
