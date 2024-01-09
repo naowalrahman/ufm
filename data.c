@@ -47,8 +47,8 @@ void display_dir(char *dir) {
     closedir(d);
 }
 
-bool rename_file(char *old_name, char *new_name) {
-    if (rename(old_name, new_name) == 0) {
+bool rename_file(char *old, char *new) {
+    if (rename(old, new) == 0) {
         return true;
     }
     else {

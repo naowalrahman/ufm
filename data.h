@@ -19,5 +19,8 @@ struct finfo {
 struct finfo **get_file_listing(char *dir, int *size);
 bool create_file(char *name);
 void display_dir(char *dir);
+bool rename_file(char *old, char *new);
+bool delete_file(char *name);
+bool move_file(char *old, char *new);
 
 #endif
