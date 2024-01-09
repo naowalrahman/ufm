@@ -7,19 +7,19 @@ bool create_file(char *name) {
     return true;
 }
 
-int get_file_listing(char *dir, struct finfo ***list) {
+struct finfo **get_file_listing(char *dir, int *size) {
     DIR *d = opendir(dir);
     struct dirent *entry;
 
-    int size = 0;
+    *size = 0;
     while ((entry = readdir(d))) {
-        if (entry->d_type != DT_DIR) ++size;
+        if (entry->d_type != DT_DIR) ++(*size);
     }
 
     closedir(d);
     d = opendir(dir);
-    *list = malloc(size * sizeof(struct finfo *));
-    struct finfo **itr = *list;
+    struct finfo **list = malloc(*size * sizeof(struct finfo *));
+    struct finfo **itr = list;
 
     while ((entry = readdir(d))) {
         if (entry->d_type != DT_DIR) {
@@ -35,7 +35,7 @@ int get_file_listing(char *dir, struct finfo ***list) {
     }
     closedir(d);
 
-    return size;
+    return list;
 }
 
 void display_dir(char *dir) {
@@ -46,24 +46,27 @@ void display_dir(char *dir) {
 
     closedir(d);
 }
-bool rename_file(char* old_name, char* new_name) {
+
+bool rename_file(char *old_name, char *new_name) {
     if (rename(old_name, new_name) == 0) {
         return true;
-    } else {
+    }
+    else {
         perror("Error renaming file");
         return false;
     }
 }
 
-bool delete_file(char* name) {
+bool delete_file(char *name) {
     if (remove(name) == 0) {
         return true;
-    } else {
+    }
+    else {
         perror("Error deleting file");
         return false;
     }
 }
 
-bool move_file(char* old, char* new) {
+bool move_file(char *old, char *new) {
     return rename_file(old, new);
 }
