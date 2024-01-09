@@ -17,6 +17,9 @@ Fixed the `display_dir()` function and optimized to make the code shorter. The f
 ### 2024-01-06 to 2024-01-07
 Created `process.h` file with functions necessary to open child processes and decide which program to run for some selected file in the file manager. Fixed an include guard inconsistency. 
 
+### 2024-01-08
+Code `open_file_program()` function under `process.c`, using `execlp()` and `xdg-open` to open some given file dynamically. Tested all the data functions. Fixed `get_file_listing()` function, which in partticular was causing many segmentation faults. I also made the function use a custom `struct finfo` which combines data from a `struct dirent` and a `struct stat` to give all the possibly necessary information of the file in one data structure. Finally, I setup `ncurses` (edited the makefile accordingly with `-lncurses` flag) and tested moving the cursor around with the `wmove()` function.
+
 ## Rahel
 
 ### 2024-01-02
