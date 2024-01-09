@@ -18,6 +18,5 @@ struct finfo {
 
 struct finfo **get_file_listing(char *dir, int *size);
 bool create_file(char *name);
-void display_dir(char *dir);
 
 #endif

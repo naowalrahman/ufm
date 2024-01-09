@@ -12,9 +12,7 @@ struct finfo **get_file_listing(char *dir, int *size) {
     struct dirent *entry;
 
     *size = 0;
-    while ((entry = readdir(d))) {
-        if (entry->d_type != DT_DIR) ++(*size);
-    }
+    while ((entry = readdir(d))) ++(*size);
 
     closedir(d);
     d = opendir(dir);
@@ -22,29 +20,21 @@ struct finfo **get_file_listing(char *dir, int *size) {
     struct finfo **itr = list;
 
     while ((entry = readdir(d))) {
-        if (entry->d_type != DT_DIR) {
-            struct finfo *f = malloc(sizeof(struct finfo));
+        struct finfo *f = malloc(sizeof(struct finfo));
 
-            f->entry = entry;
+        f->entry = entry;
+        if (entry->d_type == DT_DIR) f->stat_buffer = NULL;
+        else {
             f->stat_buffer = malloc(sizeof(struct stat));
             stat(entry->d_name, f->stat_buffer);
-
-            *itr = f;
-            ++itr;
         }
+
+        *itr = f;
+        ++itr;
     }
     closedir(d);
 
     return list;
-}
-
-void display_dir(char *dir) {
-    DIR *d = opendir(dir);
-
-    struct dirent *entry;
-    while ((entry = readdir(d))) printf("%s\n", entry->d_name);
-
-    closedir(d);
 }
 
 bool rename_file(char *old_name, char *new_name) {
