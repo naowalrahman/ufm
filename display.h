@@ -7,5 +7,6 @@
 
 void display_dir(struct finfo **list, int size, int index, WINDOW *window);
 void display_metadata(struct stat *stat_buffer, WINDOW *window);
+static void resize_handler(int sig);
 
 #endif

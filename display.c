@@ -2,7 +2,8 @@
 #include "data.h"
 
 #define VARNAME(Variable) (#Variable)
-
+extern WINDOW *dir_win;
+extern WINDOW *metadata_win;
 int compare(const void *a, const void *b) {
     char *name_a = (*(struct finfo **)a)->entry->d_name;
     char *name_b = (*(struct finfo **)b)->entry->d_name;
@@ -30,4 +31,16 @@ void display_metadata(struct stat *stat_buffer, WINDOW *window) {
     mvwprintw(window, ++y, 2, "last modified: %s", ctime(&stat_buffer->st_mtime));
 }
 
-static void resize_handler(int sig) {}
+// static void resize_handler(int sig) {
+//     int h, w;
+//     getmaxyx(stdscr, h, w); // Get the new terminal size
+
+//     // Redraw windows based on the new size
+//     wresize(dir_win, h, w / 2);
+//     wresize(metadata_win, h, w / 2);
+//     mvwin(metadata_win, 0, w / 2);
+
+//     // Refresh the windows
+//     wrefresh(dir_win);
+//     wrefresh(metadata_win);
+// }
