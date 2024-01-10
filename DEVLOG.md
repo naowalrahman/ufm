@@ -39,3 +39,6 @@ Created file manipulation functions (rename, delete, move) using stdio builtin f
 
 ### 2024-01-08
 Modified data.h with functions required for file manipulation.
+
+### 2024-01-09
+Implemented color customization for window division in UI. Redefined magenta and initialized in pair 1. Took about 40 minutes. Issues with borders and custom attributes on text.
