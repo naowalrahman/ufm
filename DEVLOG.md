@@ -20,6 +20,9 @@ Created `process.h` file with functions necessary to open child processes and de
 ### 2024-01-08
 Code `open_file_program()` function under `process.c`, using `execlp()` and `xdg-open` to open some given file dynamically. Tested all the data functions. Fixed `get_file_listing()` function, which in partticular was causing many segmentation faults. I also made the function use a custom `struct finfo` which combines data from a `struct dirent` and a `struct stat` to give all the possibly necessary information of the file in one data structure. Finally, I setup `ncurses` (edited the makefile accordingly with `-lncurses` flag) and tested moving the cursor around with the `wmove()` function.
 
+### 2024-01-09
+Advanced development of the terminal UI with `ncurses` significantly. Two windows are drawn side-by-side, one with directory listing and the other with metadata of the current file. Implemented directory browsing by accepting arrow-key input and adjusting index of current file in `struct finfo` list accordingly. The metadata is also updated accordingly whenever the user moves to a different file in the directory. Tested preliminary borders; found issue that drawing borders overwrites printed text. This will most likely be fixed by using `mvwprintw()`. Also created helper functions `display_dir()` and `display_metadata` in `display.c`. Took about 1.5 hours of time total. 
+
 ## Rahel
 
 ### 2024-01-02
