@@ -1,35 +1,33 @@
 #include "display.h"
 #include "data.h"
-#include <time.h>
-#include <signal.h>
 
 #define VARNAME(Variable) (#Variable)
 
-int compare(void *a, void *b) {
-    struct finfo *finfo_a = *(struct finfo **)a;
-    struct finfo *finfo_b = *(struct finfo **)b;
-    return strcmp(finfo_a->entry->d_name, finfo_b->entry->d_name);
+int compare(const void *a, const void *b) {
+    char *name_a = (*(struct finfo **)a)->entry->d_name;
+    char *name_b = (*(struct finfo **)b)->entry->d_name;
+    return strcmp(name_a, name_b);
 }
 
 void display_dir(struct finfo **list, int size, int index, WINDOW *window) {
     qsort(list, size, sizeof(struct finfo *), compare);
-    for(int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         struct dirent *entry = list[i]->entry;
 
-        if(i == index) wattron(window, A_STANDOUT);
-        wprintw(window, "%s%c\n", entry->d_name, entry->d_type == DT_DIR ? '/' : ' ');
+        if (i == index) wattron(window, A_STANDOUT);
+        mvwprintw(window, i + 1, 2, "%s%c\n", entry->d_name, entry->d_type == DT_DIR ? '/' : ' ');
         wattroff(window, A_STANDOUT);
-    } 
+    }
 }
 
 void display_metadata(struct stat *stat_buffer, WINDOW *window) {
-    wprintw(window, "size: %ld bytes\n", stat_buffer->st_size);
-    wprintw(window, "user id: %d\n", stat_buffer->st_uid);
-    wprintw(window, "group id: %d\n", stat_buffer->st_gid);
-    wprintw(window, "permissions: %d\n", stat_buffer->st_mode);
-    wprintw(window, "last accessed: %s", ctime(&stat_buffer->st_atime));
-    wprintw(window, "last modified: %s", ctime(&stat_buffer->st_mtime));
+    int y = 0;
+    mvwprintw(window, ++y, 2, "size: %ld bytes\n", stat_buffer->st_size);
+    mvwprintw(window, ++y, 2, "user id: %d\n", stat_buffer->st_uid);
+    mvwprintw(window, ++y, 2, "group id: %d\n", stat_buffer->st_gid);
+    mvwprintw(window, ++y, 2, "permissions: %o\n", stat_buffer->st_mode);
+    mvwprintw(window, ++y, 2, "last accessed: %s", ctime(&stat_buffer->st_atime));
+    mvwprintw(window, ++y, 2, "last modified: %s", ctime(&stat_buffer->st_mtime));
 }
 
-static void resize_handler(int sig) {
-}
+static void resize_handler(int sig) {}

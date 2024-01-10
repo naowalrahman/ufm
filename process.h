@@ -2,10 +2,9 @@
 
 #define PROCESS_H
 
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
+#include "data.h"
+#include "include.h"
 
-void open_file_program(char *file);
+void open_file_program(struct finfo ***list, int index, int *size);
 
 #endif

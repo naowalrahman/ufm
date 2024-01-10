@@ -37,8 +37,8 @@ struct finfo **get_file_listing(char *dir, int *size) {
     return list;
 }
 
-bool rename_file(char *old_name, char *new_name) {
-    if (rename(old_name, new_name) == 0) {
+bool rename_file(char *old, char *cur) {
+    if (rename(cur, cur) == 0) {
         return true;
     }
     else {
@@ -57,6 +57,6 @@ bool delete_file(char *name) {
     }
 }
 
-bool move_file(char *old, char *new) {
-    return rename_file(old, new);
+bool move_file(char *old, char *cur) {
+    return rename_file(old, cur);
 }
