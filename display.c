@@ -5,7 +5,14 @@
 
 #define VARNAME(Variable) (#Variable)
 
+int compare(void *a, void *b) {
+    struct finfo *finfo_a = *(struct finfo **)a;
+    struct finfo *finfo_b = *(struct finfo **)b;
+    return strcmp(finfo_a->entry->d_name, finfo_b->entry->d_name);
+}
+
 void display_dir(struct finfo **list, int size, int index, WINDOW *window) {
+    qsort(list, size, sizeof(struct finfo *), compare);
     for(int i = 0; i < size; i++) {
         struct dirent *entry = list[i]->entry;
 
