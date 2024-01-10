@@ -5,11 +5,15 @@
 
 int main() {
     initscr();
+    start_color();
+    init_color(COLOR_MAGENTA, 5 * 1000 / 255, 3 * 1000 / 255, 26 * 1000 / 255);
+    init_pair(1, COLOR_WHITE, COLOR_MAGENTA);
     cbreak();
     noecho();
     keypad(stdscr, TRUE);
 
     WINDOW *dir_win = newwin(LINES, COLS * 2 / 3, 0, 0);
+    wbkgd(dir_win, COLOR_PAIR(1));
     WINDOW *metadata_win = newwin(LINES, COLS / 3, 0, COLS * 2 / 3);
     refresh();
 
