@@ -43,18 +43,18 @@ int main() {
         wrefresh(metadata_win);
 
         int ch = getch();
-        switch (ch) {
-        case KEY_DOWN:
-            ++index;
-            break;
-        case KEY_UP:
-            --index;
-            break;
-        case KEY_ENTER:
-            open_file_program(&list, index, &size);
-            
-            index = 0;
-            break;
+        if (ch == KEY_DOWN) ++index;
+        else if (ch == KEY_UP) --index;
+        else if (ch == '\n') {
+            struct dirent *entry = list[index]->entry;
+            if (entry->d_type == DT_DIR) {
+                char path[] = "./";
+                strcat(path, entry->d_name);
+                chdir(path);
+                list = get_file_listing(".", &size);
+                index = 0;
+            }
+            else open_file_program(entry->d_name);
         }
     }
 

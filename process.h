@@ -5,6 +5,7 @@
 #include "data.h"
 #include "include.h"
 
-void open_file_program(struct finfo ***list, int index, int *size);
+void open_file_program(char *name);
+struct finfo **cd(char *dir, int *size);
 
 #endif
