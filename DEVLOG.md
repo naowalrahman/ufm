@@ -23,6 +23,12 @@ Code `open_file_program()` function under `process.c`, using `execlp()` and `xdg
 ### 2024-01-09
 Advanced development of the terminal UI with `ncurses` significantly. Two windows are drawn side-by-side, one with directory listing and the other with metadata of the current file. Implemented directory browsing by accepting arrow-key input and adjusting index of current file in `struct finfo` list accordingly. The metadata is also updated accordingly whenever the user moves to a different file in the directory. Tested preliminary borders; found issue that drawing borders overwrites printed text. This will most likely be fixed by using `mvwprintw()`. Also created helper functions `display_dir()` and `display_metadata` in `display.c`. Took about 1.5 hours of time total. 
 
+### 2024-01-10
+Used `getch()` to detect if enter key was pressed and then open the hovered on directory/file accordingly. If it was a file, it is opened with xdg-open (through `execlp()`), and if it is a directory, the working directory of the program is changed and the file list is re-rendered. I also fixed Rahel's use of sorting the list with a custom comparator, making the parameters `const void *`. Also, the borders were being overwritten by the rendered text, so I used `mvwprintw()` instead to print the lines one extra character to the right so the border characters weren't touched. Finally, I increased `include.h` to include all of the imports for every file in the project. Took about 2 hours in total.
+
+### 2024-01-11
+Fixed directory switching and added for keybindings. Vim keys can now be used to move around the file managaer - j/k to go up and down the directory listing, and h/l to go back and forth between directories. I also fixed directory opening to remove segmentation faults. Tried to implement preview of a directory when hovered on on the right window (since there isn't much metadata to show about a directory), but there is a segmentation fault that needs to be addressed. I also optimized our directory listing sorting by only sorting when the working directory changes (i.e. when `get_file_listing()`) is called instead of every time the directory is displayed. Took about 1.5 hours in total.
+
 ## Rahel
 
 ### 2024-01-02
