@@ -2,16 +2,10 @@
 #include "data.h"
 
 #define VARNAME(Variable) (#Variable)
-extern WINDOW *dir_win;
-extern WINDOW *metadata_win;
-int compare(const void *a, const void *b) {
-    char *name_a = (*(struct finfo **)a)->entry->d_name;
-    char *name_b = (*(struct finfo **)b)->entry->d_name;
-    return strcmp(name_a, name_b);
-}
+// extern WINDOW *dir_win;
+// extern WINDOW *metadata_win;
 
 void display_dir(struct finfo **list, int size, int index, WINDOW *window) {
-    qsort(list, size, sizeof(struct finfo *), compare);
     for (int i = 0; i < size; i++) {
         struct dirent *entry = list[i]->entry;
 

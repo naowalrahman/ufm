@@ -22,8 +22,10 @@ int main() {
     refresh();
     
 
-    int size;
+    int size, next_size;
     struct finfo **list = get_file_listing(".", &size);
+    struct finfo **next_list = list;
+    next_size = size;
 
     int index = 0;
     while (1) {
@@ -42,23 +44,33 @@ int main() {
         if (list[index]->entry->d_type != DT_DIR) {
             display_metadata(list[index]->stat_buffer, metadata_win);
         }
+        else {
+            display_dir(next_list, next_size, -1, metadata_win);
+        }
         box(metadata_win, 0, 0);
 
         wrefresh(metadata_win);
 
+        int prev_index = index;
+
         int ch = getch();
-        if (ch == KEY_DOWN) ++index;
-        else if (ch == KEY_UP) --index;
-        else if (ch == '\n') {
+        if (ch == KEY_DOWN || ch == 'j') ++index;
+        else if (ch == KEY_UP || ch == 'k') --index;
+        else if (ch == '\n' || ch == KEY_RIGHT || ch == 'l') {
             struct dirent *entry = list[index]->entry;
             if (entry->d_type == DT_DIR) {
-                char path[] = "./";
+                char path[256] = "./";
                 strcat(path, entry->d_name);
                 chdir(path);
                 list = get_file_listing(".", &size);
                 index = 0;
             }
             else open_file_program(entry->d_name);
+        }
+        else if(ch == KEY_LEFT || ch == 'h') {
+            chdir("..");
+            list = get_file_listing(".", &size);
+            index = 0;
         }
     }
 

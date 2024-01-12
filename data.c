@@ -7,6 +7,12 @@ bool create_file(char *name) {
     return true;
 }
 
+int compare(const void *a, const void *b) {
+    char *name_a = (*(struct finfo **)a)->entry->d_name;
+    char *name_b = (*(struct finfo **)b)->entry->d_name;
+    return strcmp(name_a, name_b);
+}
+
 struct finfo **get_file_listing(char *dir, int *size) {
     DIR *d = opendir(dir);
     struct dirent *entry;
@@ -20,6 +26,7 @@ struct finfo **get_file_listing(char *dir, int *size) {
     struct finfo **itr = list;
 
     while ((entry = readdir(d))) {
+        // if(strcmp(entry->d_name, ".") == 0) continue;
         struct finfo *f = malloc(sizeof(struct finfo));
 
         f->entry = entry;
@@ -34,11 +41,13 @@ struct finfo **get_file_listing(char *dir, int *size) {
     }
     closedir(d);
 
+    qsort(list, *size, sizeof(struct finfo *), compare);
+
     return list;
 }
 
 bool rename_file(char *old, char *cur) {
-    if (rename(cur, cur) == 0) {
+    if (rename(old, cur) == 0) {
         return true;
     }
     else {
