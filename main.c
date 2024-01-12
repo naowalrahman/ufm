@@ -7,7 +7,7 @@
 
 int main() {
     initscr();
-    
+    // signal(SIGWINCH, resize_handler);
     // start_color();
     // init_color(COLOR_NAVY, 5 * 1000 / 255, 3 * 1000 / 255, 26 * 1000 / 255);
     // init_color(COLOR_NAVY, 1000, 1000, 1000);
@@ -17,8 +17,16 @@ int main() {
     keypad(stdscr, TRUE);
 
     WINDOW *dir_win = newwin(LINES, COLS / 2, 0, 0);
+    scrollok(dir_win, TRUE);
+
     // wbkgd(dir_win, COLOR_PAIR(1));
-    WINDOW *metadata_win = newwin(LINES, COLS / 2, 0, COLS / 2);
+    WINDOW *metadata_win = newwin(LINES/2, COLS / 2, 0, COLS / 2);
+    scrollok(metadata_win, TRUE);
+
+    WINDOW *preview_win = newwin(LINES/2, COLS / 2, LINES/2, COLS/2);
+    scrollok(preview_win, TRUE);
+    
+    // signal(SIGWINCH, resize_handler);
     refresh();
     
 
@@ -45,6 +53,14 @@ int main() {
         box(metadata_win, 0, 0);
 
         wrefresh(metadata_win);
+        wclear(preview_win);
+        // if (list[index]->entry->d_type != DT_DIR) {
+        //     display_file_preview(list[index]->entry, preview_win);
+        // }
+        box(preview_win,0,0);
+        wrefresh(preview_win);
+
+        
 
         int ch = getch();
         switch (ch) {

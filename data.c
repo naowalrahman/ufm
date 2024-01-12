@@ -1,11 +1,5 @@
 #include "data.h"
 
-bool create_file(char *name) {
-    int fd = open(name, O_CREAT | O_WRONLY, 0644);
-    if (fd == -1) return false;
-    close(fd);
-    return true;
-}
 
 struct finfo **get_file_listing(char *dir, int *size) {
     DIR *d = opendir(dir);
@@ -36,7 +30,13 @@ struct finfo **get_file_listing(char *dir, int *size) {
 
     return list;
 }
-
+//FILE FUNCTIONS
+bool create_file(char *name) {
+    int fd = open(name, O_CREAT | O_WRONLY, 0644);
+    if (fd == -1) return false;
+    close(fd);
+    return true;
+}
 bool rename_file(char *old, char *cur) {
     if (rename(cur, cur) == 0) {
         return true;
@@ -56,7 +56,26 @@ bool delete_file(char *name) {
         return false;
     }
 }
-
-bool move_file(char *old, char *cur) {
-    return rename_file(old, cur);
+// DIR FUNCTIONS
+bool create_dir(char *name) {
+    if (mkdir(name, 0755) == -1) return false;
+    return true;
+}
+bool rename_directory(char *old, char *cur) {
+    if (rename(old, cur) == 0) {
+        return true;
+    }
+    else {
+        perror("Error renaming directory");
+        return false;
+    }
+}
+bool delete_directory(char *name) {
+    if (remove(name) == 0) {
+        return true;
+    }
+    else {
+        perror("Error deleting directory");
+        return false;
+    }
 }

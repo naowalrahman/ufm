@@ -2,8 +2,8 @@
 #include "data.h"
 
 #define VARNAME(Variable) (#Variable)
-extern WINDOW *dir_win;
-extern WINDOW *metadata_win;
+// extern WINDOW *dir_win;
+// extern WINDOW *metadata_win;
 int compare(const void *a, const void *b) {
     char *name_a = (*(struct finfo **)a)->entry->d_name;
     char *name_b = (*(struct finfo **)b)->entry->d_name;
@@ -30,6 +30,16 @@ void display_metadata(struct stat *stat_buffer, WINDOW *window) {
     mvwprintw(window, ++y, 2, "last accessed: %s", ctime(&stat_buffer->st_atime));
     mvwprintw(window, ++y, 2, "last modified: %s", ctime(&stat_buffer->st_mtime));
 }
+void display_file_preview(struct dirent *entry, WINDOW *window){
+    int y = 0;
+    FILE *file = fopen(entry->d_name, "r");
+    char line[256];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        mvwprintw(window, ++y, 2, "%s", line);
+    }
+    fclose(file);
+}
+
 
 // static void resize_handler(int sig) {
 //     int h, w;
