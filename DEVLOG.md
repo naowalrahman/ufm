@@ -48,3 +48,6 @@ Modified data.h with functions required for file manipulation.
 
 ### 2024-01-09
 Implemented color customization for window division in UI. Redefined magenta and initialized in pair 1. Issues with borders and custom attributes on text. Created a sort function to sort the files displayed by display_dir. Looks very nice. Took about 50 minutes.
+
+### 2024-01-10 to 2024-01-11
+Resize contents if an xterm is resized. All windows are redrawn based on new height and width. Used sigwinch signal for sighandler. 1.2 hours.
