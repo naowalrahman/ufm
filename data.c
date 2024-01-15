@@ -1,12 +1,5 @@
 #include "data.h"
 
-bool create_file(char *name) {
-    int fd = open(name, O_CREAT | O_WRONLY, 0644);
-    if (fd == -1) return false;
-    close(fd);
-    return true;
-}
-
 int compare(const void *a, const void *b) {
     char *name_a = (*(struct finfo **)a)->name;
     char *name_b = (*(struct finfo **)b)->name;
@@ -57,6 +50,13 @@ void free_finfo_list(struct finfo **list, int size) {
         free(list[i]);
     }
     free(list);
+}
+
+bool create_file(char *name) {
+    int fd = open(name, O_CREAT | O_WRONLY, 0644);
+    if (fd == -1) return false;
+    close(fd);
+    return true;
 }
 
 bool rename_file(char *old, char *cur) {

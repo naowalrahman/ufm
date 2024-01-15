@@ -10,9 +10,17 @@ void open_file_program(char *name) {
     }
 }
 
+char *get_cwd_size() {
+    FILE *f = popen("du -sh", "r");
+    char *size = malloc(256 * sizeof(char));
+    fgets(size, 256, f);
+
+    return size;
+}
+
 void err(char *src) {
     if (errno != 0) {
         fprintf(stderr, "%s errno %d: %s\n", src, errno, strerror(errno));
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 }

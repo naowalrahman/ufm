@@ -1,6 +1,7 @@
 #include "display.h"
 #include "data.h"
 #include "process.h"
+#include <time.h>
 
 void display_dir_simple(char *dir, WINDOW *window) {
     fprintf(stderr, "%s\n", dir);
@@ -27,7 +28,7 @@ void display_dir(struct finfo **list, int size, int index, WINDOW *window) {
     for (int i = 0; i < size; i++) {
         if (i == index) wattron(window, A_STANDOUT);
         if (list[i]->type == DT_DIR) {
-            wattron(window, COLOR_PAIR(1));
+            wattron(window, COLOR_PAIR(PAIR_DIR));
             wattron(window, A_BOLD);
         }
 
@@ -48,4 +49,14 @@ void display_metadata(struct stat *stat_buffer, WINDOW *window) {
     mvwprintw(window, ++y, 2, "permissions: %o", stat_buffer->st_mode);
     mvwprintw(window, ++y, 2, "last accessed: %s", ctime(&stat_buffer->st_atime));
     mvwprintw(window, ++y, 2, "last modified: %s", ctime(&stat_buffer->st_mtime));
+}
+
+void display_bar(WINDOW *window, char *cwd_size) {
+    time_t t = time(NULL);
+    struct tm *time_info = localtime(&t);
+    char buffer[256];
+    strftime(buffer, 256, "%A %F %I:%M %p %Z", time_info);
+
+    wprintw(window, "%s", buffer);
+    wprintw(window, "\t\t%s", cwd_size);
 }

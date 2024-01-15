@@ -3,7 +3,9 @@
 #define INCLUDE_H
 
 #include <dirent.h>
+#include <errno.h>
 #include <fcntl.h>
+#include <locale.h>
 #include <ncurses.h>
 #include <signal.h>
 #include <stdbool.h>
@@ -15,7 +17,5 @@
 #include <sys/wait.h>
 #include <time.h>
 #include <unistd.h>
-#include <errno.h>
-#include <locale.h>
 
 #endif
