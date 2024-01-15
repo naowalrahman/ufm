@@ -82,6 +82,19 @@ int main() {
             bar_win = newwin(1, COLS, LINES - 1, 0);
             refresh();
         }
+        else if (ch == KEY_BACKSPACE){
+            if (list[index]->type == DT_DIR) delete_dir(list[index]->name);
+            else {
+                delete_file(list[index]->name);
+                free_finfo_list(list, size);
+                list = get_file_listing(".", &size);
+                cwd_size = get_cwd_size();
+            } 
+            // Refresh the file listing
+            
+            
+            
+        }
         // else if (ch == 'd') {
         //     scroll(dir_win);
         // }

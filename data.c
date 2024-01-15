@@ -52,21 +52,13 @@ void free_finfo_list(struct finfo **list, int size) {
     free(list);
 }
 
+//FILE FUNCTIONS
+
 bool create_file(char *name) {
     int fd = open(name, O_CREAT | O_WRONLY, 0644);
     if (fd == -1) return false;
     close(fd);
     return true;
-}
-
-bool rename_file(char *old, char *cur) {
-    if (rename(old, cur) == 0) {
-        return true;
-    }
-    else {
-        perror("Error renaming file");
-        return false;
-    }
 }
 
 bool delete_file(char *name) {
@@ -78,7 +70,18 @@ bool delete_file(char *name) {
         return false;
     }
 }
+// DIR FUNCTIONS
+bool create_dir(char *name) {
+    if (mkdir(name, 0755) == -1) return false;
+    return true;
+}
 
-bool move_file(char *old, char *cur) {
-    return rename_file(old, cur);
+bool delete_dir(char *name) {
+    if (remove(name) == 0) {
+        return true;
+    }
+    else {
+        perror("Error deleting directory");
+        return false;
+    }
 }
