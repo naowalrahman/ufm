@@ -7,12 +7,19 @@ bool create_file(char *name) {
     return true;
 }
 
+int compare(const void *a, const void *b) {
+    char *name_a = (*(struct finfo **)a)->name;
+    char *name_b = (*(struct finfo **)b)->name;
+    return strcmp(name_a, name_b);
+}
+
 struct finfo **get_file_listing(char *dir, int *size) {
     DIR *d = opendir(dir);
     struct dirent *entry;
 
     *size = 0;
     while ((entry = readdir(d))) ++(*size);
+    --*size;
 
     closedir(d);
     d = opendir(dir);
@@ -20,13 +27,17 @@ struct finfo **get_file_listing(char *dir, int *size) {
     struct finfo **itr = list;
 
     while ((entry = readdir(d))) {
+        if (strcmp(entry->d_name, ".") == 0) continue;
         struct finfo *f = malloc(sizeof(struct finfo));
 
-        f->entry = entry;
-        if (entry->d_type == DT_DIR) f->stat_buffer = NULL;
+        f->name = malloc(256 * sizeof(char));
+        strcpy(f->name, entry->d_name);
+        f->type = entry->d_type;
+
+        if (f->type == DT_DIR) f->stat_buffer = NULL;
         else {
             f->stat_buffer = malloc(sizeof(struct stat));
-            stat(entry->d_name, f->stat_buffer);
+            stat(f->name, f->stat_buffer);
         }
 
         *itr = f;
@@ -34,11 +45,22 @@ struct finfo **get_file_listing(char *dir, int *size) {
     }
     closedir(d);
 
+    qsort(list, *size, sizeof(struct finfo *), compare);
+
     return list;
 }
 
+void free_finfo_list(struct finfo **list, int size) {
+    for (int i = 0; i < size; i++) {
+        free(list[i]->name);
+        free(list[i]->stat_buffer);
+        free(list[i]);
+    }
+    free(list);
+}
+
 bool rename_file(char *old, char *cur) {
-    if (rename(cur, cur) == 0) {
+    if (rename(old, cur) == 0) {
         return true;
     }
     else {
