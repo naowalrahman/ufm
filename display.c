@@ -4,7 +4,7 @@
 
 void display_dir_simple(char *dir, WINDOW *window) {
     fprintf(stderr, "%s\n", dir);
-    
+
     DIR *d = opendir(dir);
     err("display_dir_simple 1");
     struct dirent *entry;
@@ -13,7 +13,7 @@ void display_dir_simple(char *dir, WINDOW *window) {
     while ((entry = readdir(d))) {
         char name[256];
         strcpy(name, entry->d_name);
-        if(strcmp(name, ".") == 0 || strcmp(name, "..") == 0) continue;
+        if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0) continue;
 
         mvwprintw(window, ++y, 2, "%s%c", name, entry->d_type == DT_DIR ? '/' : ' ');
         err("display_dir_simple 2");
@@ -26,9 +26,17 @@ void display_dir_simple(char *dir, WINDOW *window) {
 void display_dir(struct finfo **list, int size, int index, WINDOW *window) {
     for (int i = 0; i < size; i++) {
         if (i == index) wattron(window, A_STANDOUT);
+        if (list[i]->type == DT_DIR) {
+            wattron(window, COLOR_PAIR(1));
+            wattron(window, A_BOLD);
+        }
+
         mvwprintw(window, i + 1, 2, "%s%c", list[i]->name, list[i]->type == DT_DIR ? '/' : ' ');
         err("display_dir 1");
+
         wattroff(window, A_STANDOUT);
+        wattroff(window, COLOR_PAIR(1));
+        wattroff(window, A_BOLD);
     }
 }
 
@@ -41,17 +49,3 @@ void display_metadata(struct stat *stat_buffer, WINDOW *window) {
     mvwprintw(window, ++y, 2, "last accessed: %s", ctime(&stat_buffer->st_atime));
     mvwprintw(window, ++y, 2, "last modified: %s", ctime(&stat_buffer->st_mtime));
 }
-
-// static void resize_handler(int sig) {
-//     int h, w;
-//     getmaxyx(stdscr, h, w); // Get the new terminal size
-
-//     // Redraw windows based on the new size
-//     wresize(dir_win, h, w / 2);
-//     wresize(metadata_win, h, w / 2);
-//     mvwin(metadata_win, 0, w / 2);
-
-//     // Refresh the windows
-//     wrefresh(dir_win);
-//     wrefresh(metadata_win);
-// }

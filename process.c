@@ -10,18 +10,9 @@ void open_file_program(char *name) {
     }
 }
 
-struct finfo **cd(char *dir, int *size) {
-    char path[] = "./";
-    strcat(path, dir);
-    chdir(path);
-    struct finfo **list = get_file_listing(".", size);
-    return list;
-}
-
 void err(char *src) {
-    if(errno != 0) {
+    if (errno != 0) {
         fprintf(stderr, "%s errno %d: %s\n", src, errno, strerror(errno));
         exit(1);
     }
 }
-

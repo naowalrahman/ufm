@@ -27,7 +27,7 @@ struct finfo **get_file_listing(char *dir, int *size) {
     struct finfo **itr = list;
 
     while ((entry = readdir(d))) {
-        if(strcmp(entry->d_name, ".") == 0) continue;
+        if (strcmp(entry->d_name, ".") == 0) continue;
         struct finfo *f = malloc(sizeof(struct finfo));
 
         f->name = malloc(256 * sizeof(char));
@@ -51,11 +51,11 @@ struct finfo **get_file_listing(char *dir, int *size) {
 }
 
 void free_finfo_list(struct finfo **list, int size) {
-    for(int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         free(list[i]->name);
         free(list[i]->stat_buffer);
         free(list[i]);
-    } 
+    }
     free(list);
 }
 
