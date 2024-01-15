@@ -17,3 +17,11 @@ struct finfo **cd(char *dir, int *size) {
     struct finfo **list = get_file_listing(".", size);
     return list;
 }
+
+void err(char *src) {
+    if(errno != 0) {
+        fprintf(stderr, "%s errno %d: %s\n", src, errno, strerror(errno));
+        exit(1);
+    }
+}
+
