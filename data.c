@@ -1,5 +1,5 @@
 #include "data.h"
-
+#include <limits.h>
 int compare(const void *a, const void *b) {
     char *name_a = (*(struct finfo **)a)->name;
     char *name_b = (*(struct finfo **)b)->name;
@@ -77,11 +77,40 @@ bool create_dir(char *name) {
 }
 
 bool delete_dir(char *name) {
-    if (remove(name) == 0) {
-        return true;
+  DIR *dir = opendir(name);
+  if (dir == NULL) {
+    // Handle error opening directory
+    return false;
+  }
+
+  struct dirent *entry;
+  while ((entry = readdir(dir)) != NULL) {
+    if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0) {
+      continue;
     }
-    else {
-        perror("Error deleting directory");
+
+    char path[PATH_MAX];
+    snprintf(path, sizeof(path), "%s/%s", name, entry->d_name);
+
+    if (entry->d_type == DT_DIR) {
+      if (!delete_dir(path)) {
+        closedir(dir);
         return false;
+      }
+    } else {
+      if (remove(path) != 0) {
+        // Handle error deleting file
+        closedir(dir);
+        return false;
+      }
     }
+  }
+
+  closedir(dir);
+  if (remove(name) != 0) {
+    // Handle error deleting empty directory
+    return false;
+  }
+
+  return true;
 }
