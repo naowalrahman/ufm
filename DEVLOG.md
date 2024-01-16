@@ -29,6 +29,9 @@ Used `getch()` to detect if enter key was pressed and then open the hovered on d
 ### 2024-01-11
 Fixed directory switching and added for keybindings. Vim keys can now be used to move around the file managaer - j/k to go up and down the directory listing, and h/l to go back and forth between directories. I also fixed directory opening to remove segmentation faults. Tried to implement preview of a directory when hovered on on the right window (since there isn't much metadata to show about a directory), but there is a segmentation fault that needs to be addressed. I also optimized our directory listing sorting by only sorting when the working directory changes (i.e. when `get_file_listing()`) is called instead of every time the directory is displayed. Took about 1.5 hours in total.
 
+### 2024-01-12 to 2024-01-15
+Fixed segmentation faults ocurring due to dependence on the size of `d_name` in `struct dirent`. Changed `struct finfo` to accomodate file name and type without needing the store a dirent. Added a taskbar that displays current time and directory size. Colored directories and used signal handling to handle SIGINT and automatically redraw the screen when the terminal is resized. Took about 3 hours in total including debugging. 
+
 ## Rahel
 
 ### 2024-01-02
