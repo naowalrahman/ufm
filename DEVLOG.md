@@ -54,3 +54,6 @@ Implemented color customization for window division in UI. Redefined magenta and
 
 ### 2024-01-10 to 2024-01-11
 Resize contents if an xterm is resized. All windows are redrawn based on new height and width. Used sigwinch signal for sighandler. 1.2 hours.
+
+### 2024-01-12 to 2024-01-15
+Created file/dir functions and delete them. Incorporated recursive deletion into delete_dir. Took about 4 hours including debugging.
