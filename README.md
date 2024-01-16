@@ -1,15 +1,32 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/SQs7pKlr)
-# PROJECT NAME HERE
+# UFM (UNIX File Manager)
 
-### The Curry Munchers
+**Team Name:** The Curry Munchers
 
-Naowal Rahman, Rahel Arka
+**Team Members:** Naowal Rahman, Rahel Arka
        
-### Project Description:
+### Project Description
 
-Explain what is this project.
+UFM is a simple file manager that can be used to browser directories and files. You can preview hovered-on directories and see metadata for hovered-on files. Files can be deleted or opened in an applicable program. The current date and size of the current directory are displayed at the bottom of the screen.
   
-### Instructions:
+### Instructions
 
-How does the user install/compile/run the program.
-How does the user interact with this program?
+#### Compilation
+Ncurses is required. This should be installed on most UNIX systems, but refer to your Linux distribution's package manager for installing the library. 
+
+This is how you run the program:
+```bash
+make compile
+make run
+```
+
+Just `make` also suffices.
+
+#### Usage
+There are several keybinds:
+| Key      | Action |
+| ----------- | ----------- |
+| `h` or `left arrow`      | Go back a directory       |
+| `l` or `right arrow` or `Enter`   | If hovering on directory, go to that directory. If hovering on file, open that file in an applicable program      |
+| `j` or `down arrow`   | Go down a file      |
+| `k` or `up arrow`   | Go up a file     |
+| `Backspace`   | Delete hovered-on file or directory       |
