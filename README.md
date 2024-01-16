@@ -30,3 +30,5 @@ There are several keybinds:
 | `j` or `down arrow`   | Go down a file      |
 | `k` or `up arrow`   | Go up a file     |
 | `Backspace`   | Delete hovered-on file or directory       |
+| `f`   | Create a file       |
+| `d`   | Create a directory       |
