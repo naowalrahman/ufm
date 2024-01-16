@@ -1,6 +1,7 @@
 #include "data.h"
 #include "display.h"
 #include "process.h"
+#include <limits.h>
 
 static void signal_handler(int signo) {
     if (signo == SIGINT) {
@@ -96,6 +97,39 @@ int main() {
                 cwd_size = get_cwd_size();
             } 
             
+        }
+        else if (ch == 'd') {
+            // Prompt for directory name
+            char dir_name[PATH_MAX];
+            wgetnstr(dir_win, dir_name, PATH_MAX);
+
+            // Create the directory
+            if (mkdir(dir_name, 0755) != 0) {
+                
+            } else {
+                // Refresh file listing
+                free_finfo_list(list, size);
+                list = get_file_listing(".", &size);
+                display_dir(list, size, index, dir_win);
+            }
+        }
+        else if (ch == 'f'){
+            // Prompt for file name
+            char file_name[PATH_MAX];
+            wgetnstr(dir_win, file_name, PATH_MAX);
+
+            // Create the file
+            FILE *fp = fopen(file_name, "w");
+            if (fp == NULL) {
+                
+            } else {
+                fclose(fp);
+
+                
+                free_finfo_list(list, size);
+                list = get_file_listing(".", &size);
+                display_dir(list, size, index, dir_win);
+            }
         }
         // else if (ch == 'd') {
         //     scroll(dir_win);
