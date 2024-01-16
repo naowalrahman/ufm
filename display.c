@@ -7,7 +7,7 @@ void display_dir_simple(char *dir, WINDOW *window) {
     fprintf(stderr, "%s\n", dir);
 
     DIR *d = opendir(dir);
-    err("display_dir_simple 1");
+    
     struct dirent *entry;
 
     int y = 0;
@@ -17,7 +17,7 @@ void display_dir_simple(char *dir, WINDOW *window) {
         if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0) continue;
 
         mvwprintw(window, ++y, 2, "%s%c", name, entry->d_type == DT_DIR ? '/' : ' ');
-        err("display_dir_simple 2");
+        
     }
 
     free(entry);
@@ -33,7 +33,7 @@ void display_dir(struct finfo **list, int size, int index, WINDOW *window) {
         }
 
         mvwprintw(window, i + 1, 2, "%s%c", list[i]->name, list[i]->type == DT_DIR ? '/' : ' ');
-        err("display_dir 1");
+        
 
         wattroff(window, A_STANDOUT);
         wattroff(window, COLOR_PAIR(1));
