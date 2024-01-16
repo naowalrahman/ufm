@@ -18,7 +18,7 @@ Fixed the `display_dir()` function and optimized to make the code shorter. The f
 Created `process.h` file with functions necessary to open child processes and decide which program to run for some selected file in the file manager. Fixed an include guard inconsistency. 
 
 ### 2024-01-08
-Code `open_file_program()` function under `process.c`, using `execlp()` and `xdg-open` to open some given file dynamically. Tested all the data functions. Fixed `get_file_listing()` function, which in partticular was causing many segmentation faults. I also made the function use a custom `struct finfo` which combines data from a `struct dirent` and a `struct stat` to give all the possibly necessary information of the file in one data structure. Finally, I setup `ncurses` (edited the makefile accordingly with `-lncurses` flag) and tested moving the cursor around with the `wmove()` function.
+Code `open_file_program()` function under `process.c`, using `execlp()` and `xdg-open` to open some given file dynamically. Tested all the data functions. Fixed `get_file_listing()` function, which in particular was causing many segmentation faults. I also made the function use a custom `struct finfo` which combines data from a `struct dirent` and a `struct stat` to give all the possibly necessary information of the file in one data structure. Finally, I setup `ncurses` (edited the makefile accordingly with `-lncurses` flag) and tested moving the cursor around with the `wmove()` function.
 
 ### 2024-01-09
 Advanced development of the terminal UI with `ncurses` significantly. Two windows are drawn side-by-side, one with directory listing and the other with metadata of the current file. Implemented directory browsing by accepting arrow-key input and adjusting index of current file in `struct finfo` list accordingly. The metadata is also updated accordingly whenever the user moves to a different file in the directory. Tested preliminary borders; found issue that drawing borders overwrites printed text. This will most likely be fixed by using `mvwprintw()`. Also created helper functions `display_dir()` and `display_metadata` in `display.c`. Took about 1.5 hours of time total. 
@@ -56,4 +56,4 @@ Implemented color customization for window division in UI. Redefined magenta and
 Resize contents if an xterm is resized. All windows are redrawn based on new height and width. Used sigwinch signal for sighandler. 1.2 hours.
 
 ### 2024-01-12 to 2024-01-15
-Created file/dir functions and delete them. Incorporated recursive deletion into delete_dir. Took about 4 hours including debugging.
+Created file/dir functions that delete them. Incorporated recursive deletion into delete_dir. Also created file/dir functions that create them. Took about 4 hours including debugging.
