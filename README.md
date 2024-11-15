@@ -1,7 +1,5 @@
 # UFM (UNIX File Manager)
 
-**Team Name:** The Curry Munchers
-
 **Team Members:** Naowal Rahman, Rahel Arka
        
 ### Project Description
